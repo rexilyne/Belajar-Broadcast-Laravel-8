@@ -14,14 +14,17 @@ class SendMessage
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $data;
+
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($data)
     {
         //
+        $this->data = $data;
     }
 
     /**
@@ -31,6 +34,14 @@ class SendMessage
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('channel-name');
+        return new Channel('channel-name');
+    }
+
+    public function broadcastAs() {
+        return 'UserEvent';
+    }
+
+    public function broadcastWith() {
+        return  ['title' => 'Notification from broadcast'];
     }
 }
